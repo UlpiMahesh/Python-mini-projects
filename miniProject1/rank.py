@@ -58,7 +58,7 @@ def getDistinctCountries(allUnivs):
     return distinctCountries
 
 
-def getDistinctContinents(allUnivs,countries_file='cap.csv'):
+def getDistinctContinents(allUnivs,countries_file='capitals.csv'):
     
     continents=set()
     #reading capitals_file to get continents 
@@ -67,13 +67,21 @@ def getDistinctContinents(allUnivs,countries_file='cap.csv'):
         reader = csv.reader(cap_file)
         for row in reader:
             countries[row[0]]=row[-1]
+
         
-    
+    temp_dict={}
     distinctContinents = set()
     # your code is here
     for i in allUnivs.values():
         country = i['Country']
         distinctContinents.add(countries.get(country,'NA'))
+        temp_dict[country]=countries.get(country,'NA')
+    # with open('universities.csv','w',newline='') as uniFile:
+    #     writer = csv.DictWriter(uniFile,fieldnames='Continent')
+    #     writer.writeheader()
+    #     for row in allUnivs.values()
+    #     writer.writerows(temp_dict)
+    print(temp_dict)
     return distinctContinents
 
 
@@ -103,6 +111,12 @@ def getTopNatRank(countryName, allUnivs):
 def getAvgScore(countryName, allUnivs):
     countryName = countryName.upper()
     # your code is here
+    sum=0
+    count=0
+    for row in allUnivs.values():
+        if row.get('Country').upper()==countryName:
+            sum+=float(row.get('Score'))
+            count+=1
     return round(sum/count,2) 
 
 
@@ -116,6 +130,23 @@ def getUnivWithCapital(countryName, allUnivs):
     univsWithCapital=set()
     countryName = countryName.upper()
     # your code is here
+    capitals = {}
+    capital=''
+    with open('capitals.csv','r') as capFile:
+        reader = csv.reader(capFile)
+        next(reader)
+        for row in reader:
+            capitals[row[0]]=row[1]
+
+    
+    for row in allUnivs.values():
+        country = row.get('Country').upper()
+        if country in capitals.keys() and country==countryName:
+            capital = capitals.get(country)
+        if capital.lower() in row.get('Institution name').lower():
+            univsWithCapital.add(row.get('Code'))
+
+    print(univsWithCapital)
     return univsWithCapital
 
 
@@ -133,6 +164,7 @@ def studyInTwoPlaces(firstCode, firstDegree,secondCode , secondDegree, budget,al
     firstCode = firstCode.upper()
     secondCode = secondCode.upper()
     # your code is here
+
     
     #     return True
     # or
