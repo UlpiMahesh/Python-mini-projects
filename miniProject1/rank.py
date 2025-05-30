@@ -11,7 +11,7 @@ def readFiles(UniFileName, capitalsFileName):
             reader = csv.reader(capitals_file)
             countries_header = next(reader)
             for row in reader:
-                countries.append(reader)
+                countries.append(row)
                 
         # read UniFileName
         with open(UniFileName,'r') as uni_file:
@@ -19,13 +19,19 @@ def readFiles(UniFileName, capitalsFileName):
             for row in reader:
                 key = row['Code']
                 allUnivs[key]={k:v for k,v in row.items()}
+
+        for row in allUnivs.values():
+            for con in countries:
+                if row['Country'] in con:
+                    row['Continent'] = con[-1]
+        
                 
     except IOError :
         return False 
     return allUnivs
 
 
-
+readFiles('universities.csv','capitals.csv')
 
 def findCountryByName(countryName, countries):
     try:
@@ -59,7 +65,6 @@ def getDistinctCountries(allUnivs):
 
 
 def getDistinctContinents(allUnivs,countries_file='capitals.csv'):
-    
     continents=set()
     #reading capitals_file to get continents 
     countries={}
@@ -75,14 +80,13 @@ def getDistinctContinents(allUnivs,countries_file='capitals.csv'):
     for i in allUnivs.values():
         country = i['Country']
         distinctContinents.add(countries.get(country,'NA'))
-        temp_dict[country]=countries.get(country,'NA')
+        temp_dict[country.upper()]=countries.get(country,'NA')
     # with open('universities.csv','w',newline='') as uniFile:
     #     writer = csv.DictWriter(uniFile,fieldnames='Continent')
     #     writer.writeheader()
     #     for row in allUnivs.values()
     #     writer.writerows(temp_dict)
-    print(temp_dict)
-    return distinctContinents
+    return distinctContinents,temp_dict
 
 
 def getTopIntRank(countryName, allUnivs):
@@ -119,11 +123,28 @@ def getAvgScore(countryName, allUnivs):
             count+=1
     return round(sum/count,2) 
 
-
+import numpy as np
 def getRelativeScoreContinent(countryName, allUnivs):
     countryName = countryName.upper()
     # your code is here
-    return round(100*avg/max,2)
+    countries=[]
+    continents = getDistinctContinents(allUnivs)[1]
+    continent = continents[countryName]
+    for k,v in continents.items():
+        if v==continent:
+            countries.append(k)
+
+    avg=getAvgScore(countryName,allUnivs)
+    maxx=0
+    for row in allUnivs.values():
+        if row['Country'].upper() in countries:
+            maxx = max(maxx,float(row['Score']))
+
+    print(countries,continent)
+
+    print(avg,round(100*avg/maxx,2))
+            
+    return round(100*avg/maxx,2)
 
 
 def getUnivWithCapital(countryName, allUnivs):
