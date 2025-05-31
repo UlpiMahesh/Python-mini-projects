@@ -1,10 +1,12 @@
 import csv
+import numpy as np
 # #constants
 
-def readFiles(UniFileName, capitalsFileName):
+def readFiles(UniFileName, capitalsFileName,capitals=False,universities=False):
 
     countries = []
     allUnivs = {}
+    uni=[]
     try:
         # read capitalsFileName
         with open(capitalsFileName,'r') as capitals_file:
@@ -16,22 +18,28 @@ def readFiles(UniFileName, capitalsFileName):
         # read UniFileName
         with open(UniFileName,'r') as uni_file:
             reader = csv.DictReader(uni_file)
+            
             for row in reader:
                 key = row['Code']
                 allUnivs[key]={k:v for k,v in row.items()}
-
-        for row in allUnivs.values():
-            for con in countries:
-                if row['Country'] in con:
-                    row['Continent'] = con[-1]
+            uni_file.seek(0)
+            nreader = csv.reader(uni_file)
+            next(nreader)
+            for row in nreader:
+                uni.append(row)
+            
+                
         
+        
+        if capitals:
+            return countries
+        if universities:
+            return uni
                 
     except IOError :
         return False 
     return allUnivs
 
-
-readFiles('universities.csv','capitals.csv')
 
 def findCountryByName(countryName, countries):
     try:
@@ -81,11 +89,7 @@ def getDistinctContinents(allUnivs,countries_file='capitals.csv'):
         country = i['Country']
         distinctContinents.add(countries.get(country,'NA'))
         temp_dict[country.upper()]=countries.get(country,'NA')
-    # with open('universities.csv','w',newline='') as uniFile:
-    #     writer = csv.DictWriter(uniFile,fieldnames='Continent')
-    #     writer.writeheader()
-    #     for row in allUnivs.values()
-    #     writer.writerows(temp_dict)
+
     return distinctContinents,temp_dict
 
 
@@ -139,44 +143,48 @@ def getRelativeScoreContinent(countryName, allUnivs):
     for row in allUnivs.values():
         if row['Country'].upper() in countries:
             maxx = max(maxx,float(row['Score']))
-
-    print(countries,continent)
-
-    print(avg,round(100*avg/maxx,2))
             
     return round(100*avg/maxx,2)
 
-
+import numpy as np
 def getUnivWithCapital(countryName, allUnivs):
     univsWithCapital=set()
     countryName = countryName.upper()
     # your code is here
     capitals = {}
     capital=''
-    with open('capitals.csv','r') as capFile:
-        reader = csv.reader(capFile)
-        next(reader)
-        for row in reader:
-            capitals[row[0]]=row[1]
-
+    
+    #geting countries for capitals
+    countries=readFiles('universities.csv','capitals.csv',True)
+    
+    #using numpy array for faster fetching and comparing
+    countries = np.char.upper(np.array(countries))
+    arr = countries[:,0]==countryName
+    countries = countries[arr]
+    capital = countries[0,1]
     
     for row in allUnivs.values():
-        country = row.get('Country').upper()
-        if country in capitals.keys() and country==countryName:
-            capital = capitals.get(country)
-        if capital.lower() in row.get('Institution name').lower():
-            univsWithCapital.add(row.get('Code'))
+        if row['Country'].upper()==countryName and capital.upper() in row['Institution name'].upper():
+            univsWithCapital.add(row['Code'])
 
-    print(univsWithCapital)
     return univsWithCapital
 
 
-def studyInOnePlace(countryName, degrees, budget,allUnivs):
+def studyInOnePlace(countryName, degrees,budget,allUnivs):
     countryName = countryName.upper()
     codes=set()
     degrees = set( [d.upper() for d in degrees])
     # your code is here
+    universities = readFiles('universities.csv','capitals.csv',False,True)
+    universities = np.char.upper(np.array(universities))
+    #boolean indexing if using & () mandatory and check dtypes...
+    country = universities[(countryName==universities[:,3]) & (budget//2>=universities[:,-2].astype(int))]
+    for row in country:
+        offered_degrees = set(row[-3].split('-'))  # row[-3] is string split and make it set so we can compare with our degrees set
+        if degrees.issubset(offered_degrees):
+            codes.add(row[0])
     return codes
+
 
 
 def studyInTwoPlaces(firstCode, firstDegree,secondCode , secondDegree, budget,allUnivs):
@@ -184,17 +192,23 @@ def studyInTwoPlaces(firstCode, firstDegree,secondCode , secondDegree, budget,al
     secondDegree = secondDegree.upper()
     firstCode = firstCode.upper()
     secondCode = secondCode.upper()
+    flag1=False
+    flag2=False
     # your code is here
+    def get_details(uni_dict,degree,budget):
+        offered_degrees = uni_dict['Degrees Offered'].split('-')
+        offered_degrees = [row.upper() for row in offered_degrees]
+        if degree in offered_degrees and budget>=int(uni_dict['Average Cost']):
+            return True
 
-    
-    #     return True
-    # or
-    #     return False
-    # or
-    #     raise ValueError("Something went wrong!")
+        return False
+
+    dict1 = allUnivs.get(firstCode)
+    dict2 = allUnivs.get(secondCode)
+    return get_details(dict1,firstDegree,budget//2) and get_details(dict2,secondDegree,budget//2)
+
     return 
 
 
     
     
-

@@ -89,11 +89,7 @@ def getDistinctContinents(allUnivs,countries_file='capitals.csv'):
         country = i['Country']
         distinctContinents.add(countries.get(country,'NA'))
         temp_dict[country.upper()]=countries.get(country,'NA')
-    # with open('universities.csv','w',newline='') as uniFile:
-    #     writer = csv.DictWriter(uniFile,fieldnames='Continent')
-    #     writer.writeheader()
-    #     for row in allUnivs.values()
-    #     writer.writerows(temp_dict)
+
     return distinctContinents,temp_dict
 
 
@@ -174,39 +170,43 @@ def getUnivWithCapital(countryName, allUnivs):
     return univsWithCapital
 
 
-def studyInOnePlace(countryName, degrees, budget,allUnivs):
+def studyInOnePlace(countryName, degrees,budget,allUnivs):
     countryName = countryName.upper()
     codes=set()
     degrees = set( [d.upper() for d in degrees])
-    Degrees = np.array(degrees)
     # your code is here
     universities = readFiles('universities.csv','capitals.csv',False,True)
     universities = np.char.upper(np.array(universities))
     #boolean indexing if using & () mandatory and check dtypes...
-    country = universities[(countryName==universities[:,3]) & (budget>=universities[:,-2].astype(int))]
-    
-    print(country)
-    
-    
-    
-    
+    country = universities[(countryName==universities[:,3]) & (budget//2>=universities[:,-2].astype(int))]
+    for row in country:
+        offered_degrees = set(row[-3].split('-'))  # row[-3] is string split and make it set so we can compare with our degrees set
+        if degrees.issubset(offered_degrees):
+            codes.add(row[0])
     return codes
 
-# ['Code' 'World Rank' 'Institution name' 'Country' 'National Rank' 'Degrees Offered' 'Average Cost' 'Score']
+
 
 def studyInTwoPlaces(firstCode, firstDegree,secondCode , secondDegree, budget,allUnivs):
     firstDegree = firstDegree.upper()
     secondDegree = secondDegree.upper()
     firstCode = firstCode.upper()
     secondCode = secondCode.upper()
+    flag1=False
+    flag2=False
     # your code is here
+    def get_details(uni_dict,degree,budget):
+        offered_degrees = uni_dict['Degrees Offered'].split('-')
+        offered_degrees = [row.upper() for row in offered_degrees]
+        if degree in offered_degrees and budget>=int(uni_dict['Average Cost']):
+            return True
 
-    
-    #     return True
-    # or
-    #     return False
-    # or
-    #     raise ValueError("Something went wrong!")
+        return False
+
+    dict1 = allUnivs.get(firstCode)
+    dict2 = allUnivs.get(secondCode)
+    return get_details(dict1,firstDegree,budget//2) and get_details(dict2,secondDegree,budget//2)
+
     return 
 
 
