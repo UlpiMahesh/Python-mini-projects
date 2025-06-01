@@ -1,0 +1,11 @@
+                    Generated Invoice the cart
+
+Customer Name: Chandra
+Phone Number: 8297546895
+Date: 2024-03-31 08:38:13.807362
+
+Laptop x 10                      : $440000.00000000006
+Apple x 10                      : $550.0
+
+----------------------------------------------------------
+Total:                              $440550.0

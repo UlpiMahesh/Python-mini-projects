@@ -1,0 +1,1 @@
+product: Headphones Quantity: 2 Warrenty: 6 months Total price: 6000

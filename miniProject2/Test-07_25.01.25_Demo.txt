@@ -1,0 +1,174 @@
+
+-----------------------> Start the shopping <---------------------
+                     1. Add item to cart
+                     2. Remove item from cart
+                     3. View cart
+                     4. Update item quantity
+                     5. Clear cart
+                     6. Place order
+                     7. Exit
+Enter your choice: 1
+
+
+Available products to Add to cart :
+                     1. Laptop - 1N = 40000
+                     2. Headphones - 1N = 3000
+                     3. SamsungS22 - 1N = 82000
+                     4. Shirt - 1N = 600
+                     5. Pant - 1N = 1200
+                     6. Apple - 1N = 50
+                     7. Banana - 1N = 10
+                     8. Papaya - 1N = 60
+Enter the product number from above : 2
+Enter the product quantity: 3
+
+
+Last added product to cart  Headphones - $3000, Warranty: 6 months, quantity - 3
+
+-----------------------> Start the shopping <---------------------
+                     1. Add item to cart
+                     2. Remove item from cart
+                     3. View cart
+                     4. Update item quantity
+                     5. Clear cart
+                     6. Place order
+                     7. Exit
+Enter your choice: 1
+
+
+Available products to Add to cart :
+                     1. Laptop - 1N = 40000
+                     2. Headphones - 1N = 3000
+                     3. SamsungS22 - 1N = 82000
+                     4. Shirt - 1N = 600
+                     5. Pant - 1N = 1200
+                     6. Apple - 1N = 50
+                     7. Banana - 1N = 10
+                     8. Papaya - 1N = 60
+Enter the product number from above : 1
+Enter the product quantity: 2
+
+
+Last added product to cart  Laptop - $40000, Warranty: 12 months, quantity - 2
+
+-----------------------> Start the shopping <---------------------
+                     1. Add item to cart
+                     2. Remove item from cart
+                     3. View cart
+                     4. Update item quantity
+                     5. Clear cart
+                     6. Place order
+                     7. Exit
+Enter your choice: 1
+
+
+Available products to Add to cart :
+                     1. Laptop - 1N = 40000
+                     2. Headphones - 1N = 3000
+                     3. SamsungS22 - 1N = 82000
+                     4. Shirt - 1N = 600
+                     5. Pant - 1N = 1200
+                     6. Apple - 1N = 50
+                     7. Banana - 1N = 10
+                     8. Papaya - 1N = 60
+Enter the product number from above : 6
+Enter the product quantity: 10
+
+
+Last added product to cart  Apple - $50, Expiry Date: 2024-04-30, quantity - 10
+
+-----------------------> Start the shopping <---------------------
+                     1. Add item to cart
+                     2. Remove item from cart
+                     3. View cart
+                     4. Update item quantity
+                     5. Clear cart
+                     6. Place order
+                     7. Exit
+Enter your choice: 3
+
+
+Items in your cart:
+Headphones - $3000, Warranty: 6 months, x 3
+Laptop - $40000, Warranty: 12 months, x 2
+Apple - $50, Expiry Date: 2024-04-30, x 10
+
+-----------------------> Start the shopping <---------------------
+                     1. Add item to cart
+                     2. Remove item from cart
+                     3. View cart
+                     4. Update item quantity
+                     5. Clear cart
+                     6. Place order
+                     7. Exit
+Enter your choice: 2
+Enter the name of the product to remove: Headphones
+
+
+Headphones removed from the cart.
+
+-----------------------> Start the shopping <---------------------
+                     1. Add item to cart
+                     2. Remove item from cart
+                     3. View cart
+                     4. Update item quantity
+                     5. Clear cart
+                     6. Place order
+                     7. Exit
+Enter your choice: 3
+
+
+Items in your cart:
+Laptop - $40000, Warranty: 12 months, x 2
+Apple - $50, Expiry Date: 2024-04-30, x 10
+
+-----------------------> Start the shopping <---------------------
+                     1. Add item to cart
+                     2. Remove item from cart
+                     3. View cart
+                     4. Update item quantity
+                     5. Clear cart
+                     6. Place order
+                     7. Exit
+Enter your choice: 4
+Enter the name of the product to update quantity: Laptop
+Enter the new quantity: 10
+Quantity of Laptop updated to 10.
+
+-----------------------> Start the shopping <---------------------
+                     1. Add item to cart
+                     2. Remove item from cart
+                     3. View cart
+                     4. Update item quantity
+                     5. Clear cart
+                     6. Place order
+                     7. Exit
+Enter your choice: 6
+Enter the your Name: Chandra
+Enter the Phone Number: 8297546895
+Enter the filename for the invoice (e.g., invoice): my_shopping
+Placing an order
+Invoice generated and saved to my_shopping.txt
+Cart cleared.
+
+-----------------------> Start the shopping <---------------------
+                     1. Add item to cart
+                     2. Remove item from cart
+                     3. View cart
+                     4. Update item quantity
+                     5. Clear cart
+                     6. Place order
+                     7. Exit
+Enter your choice: 3
+Your cart is empty.
+
+-----------------------> Start the shopping <---------------------
+                     1. Add item to cart
+                     2. Remove item from cart
+                     3. View cart
+                     4. Update item quantity
+                     5. Clear cart
+                     6. Place order
+                     7. Exit
+Enter your choice: 7
+Logging off thank you. Visit Again!
